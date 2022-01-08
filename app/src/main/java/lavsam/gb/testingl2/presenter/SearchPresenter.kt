@@ -5,6 +5,9 @@ import lavsam.gb.testingl2.repository.GitHubRepository
 import lavsam.gb.testingl2.view.ViewContract
 import retrofit2.Response
 
+const val SEARCH_RESULTS_NULL = "Search results or total count are null"
+const val RESPONSE_NULL = "Response is null or unsuccessful"
+
 internal class SearchPresenter internal constructor(
     private val viewContract: ViewContract,
     private val repository: GitHubRepository
@@ -27,10 +30,10 @@ internal class SearchPresenter internal constructor(
                     totalCount
                 )
             } else {
-                viewContract.displayError("Search results or total count are null")
+                viewContract.displayError(SEARCH_RESULTS_NULL)
             }
         } else {
-            viewContract.displayError("Response is null or unsuccessful")
+            viewContract.displayError(RESPONSE_NULL)
         }
     }
 

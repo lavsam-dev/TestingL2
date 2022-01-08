@@ -1,5 +1,18 @@
 package lavsam.gb.testingl2
 
+import lavsam.gb.testingl2.model.SearchResponse
+import lavsam.gb.testingl2.model.SearchResult
+import lavsam.gb.testingl2.presenter.SearchPresenter
+import lavsam.gb.testingl2.repository.GitHubRepository
+import lavsam.gb.testingl2.view.ViewContract
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
+import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
+import retrofit2.Response
+
 class SearchPresenterTest {
 
     private lateinit var presenter: SearchPresenter
