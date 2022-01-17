@@ -4,7 +4,7 @@ import lavsam.gb.testingl2.model.SearchResponse
 import lavsam.gb.testingl2.model.SearchResult
 import lavsam.gb.testingl2.presenter.SearchPresenter
 import lavsam.gb.testingl2.repository.GitHubRepository
-import lavsam.gb.testingl2.view.ViewContract
+import lavsam.gb.testingl2.view.ViewSearchContract
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -21,7 +21,7 @@ class SearchPresenterTest {
     private lateinit var repository: GitHubRepository
 
     @Mock
-    private lateinit var viewContract: ViewContract
+    private lateinit var viewContract: ViewSearchContract
 
     @Before
     fun setUp() {
