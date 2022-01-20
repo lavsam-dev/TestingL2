@@ -1,3 +1,8 @@
 package lavsam.gb.testingl2.presenter
 
-internal interface PresenterContract { }
+import lavsam.gb.testingl2.view.ViewContract
+
+internal interface PresenterContract {
+    fun onAttach(view: ViewContract?)
+    fun onDetach()
+}

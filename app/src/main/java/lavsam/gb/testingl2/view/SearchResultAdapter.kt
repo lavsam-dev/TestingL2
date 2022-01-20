@@ -8,8 +8,7 @@ import kotlinx.android.synthetic.main.list_item.view.*
 import lavsam.gb.testingl2.R
 import lavsam.gb.testingl2.model.SearchResult
 
-internal class SearchResultAdapter :
-    RecyclerView.Adapter<SearchResultAdapter.SearchResultViewHolder>() {
+internal class SearchResultAdapter : RecyclerView.Adapter<SearchResultAdapter.SearchResultViewHolder>() {
 
     private var results: List<SearchResult> = listOf()
 

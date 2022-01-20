@@ -1,7 +1,9 @@
 package lavsam.gb.testingl2.presenter
 
 import lavsam.gb.testingl2.model.SearchResponse
-import lavsam.gb.testingl2.repository.GitHubRepository
+import lavsam.gb.testingl2.repository.GitHubRepositoryCallback
+import lavsam.gb.testingl2.repository.RepositoryContract
+import lavsam.gb.testingl2.view.ViewContract
 import lavsam.gb.testingl2.view.ViewSearchContract
 import retrofit2.Response
 
@@ -10,12 +12,26 @@ const val RESPONSE_NULL = "Response is null or unsuccessful"
 
 internal class SearchPresenter internal constructor(
     private val viewContract: ViewSearchContract,
-    private val repository: GitHubRepository
-) : PresenterSearchContract, GitHubRepository.GitHubRepositoryCallback {
+    private val repository: RepositoryContract,
+) : PresenterSearchContract, GitHubRepositoryCallback {
+
+    private var view: ViewContract? = null
+
+    fun getView() = view
 
     override fun searchGitHub(searchQuery: String) {
         viewContract.displayLoading(true)
         repository.searchGithub(searchQuery, this)
+    }
+
+    override fun onAttach(view: ViewContract?) {
+        if (this.view != view) {
+            this.view = view
+        }
+    }
+
+    override fun onDetach() {
+        view = null
     }
 
     override fun handleGitHubResponse(response: Response<SearchResponse?>?) {
