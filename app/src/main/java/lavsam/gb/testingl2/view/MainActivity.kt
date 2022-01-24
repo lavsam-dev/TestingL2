@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        presenter.onAttach(this)
         setUI()
     }
 
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
             startActivity(DetailsActivity.getIntent(this, totalCount))
         }
         setQueryListener()
+        showCountBySearchButton()
         setRecyclerView()
     }
 
@@ -62,6 +64,21 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         })
     }
 
+    private fun showCountBySearchButton() {
+        searchButton.setOnClickListener {
+            val query = searchEditText.text.toString()
+            if (query.isNotBlank()) {
+                presenter.searchGitHub(query)
+            } else {
+                Toast.makeText(
+                    this@MainActivity,
+                    getString(R.string.enter_search_word),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
     private fun createRepository(): GitHubRepository {
         return GitHubRepository(createRetrofit().create(GitHubApi::class.java))
     }
@@ -77,6 +94,10 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         searchResults: List<SearchResult>,
         totalCount: Int
     ) {
+        with(totalCountTextView) {
+            visibility = View.VISIBLE
+            text = String.format(Locale.getDefault(), getString(R.string.results_count), totalCount)
+        }
         this.totalCount = totalCount
         adapter.updateResults(searchResults)
     }
@@ -95,6 +116,11 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         } else {
             progressBar.visibility = View.GONE
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDetach()
     }
 
     companion object {
