@@ -50,7 +50,7 @@ class BehaviorTest {
     fun test_SearchIsPositive() {
         val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
 //        Setting the value
-        editText.text = "UiAutomator"
+        editText.text = "COBOL" //"UiAutomator"
         val searchButton = uiDevice.findObject(By.res(packageName, "searchButton"))
         searchButton.click()
 
@@ -60,7 +60,7 @@ class BehaviorTest {
             uiDevice.wait(Until.findObject(By.res(packageName, "totalCountTextView")), TIMEOUT)
 //        We make sure that the server returned the correct result. Please note that the quantity
 //        results may vary over time because the number of repositories is constantly changing.
-        Assert.assertEquals(changedText.text.toString(), "Number of results: 696")
+        Assert.assertEquals(changedText.text.toString(), "Number of results: 2997")
     }
 
     @Test
@@ -94,17 +94,17 @@ class BehaviorTest {
     @Test
     fun test_OpenDetailsScreenWithData() {
         val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
-        editText.text = "UiAutomator"
+        editText.text = "COBOL"
         val searchButton = uiDevice.findObject(By.res(packageName, "searchButton"))
         searchButton.click()
         val changedText =
             uiDevice.wait(Until.findObject(By.res(packageName, "totalCountTextView")), TIMEOUT)
-        Assert.assertEquals(changedText.text, "Number of results: 696")
+        Assert.assertEquals(changedText.text, "Number of results: 2997")
         val toDetails = uiDevice.findObject(By.res(packageName, "toDetailsActivityButton"))
         toDetails.clickAndWait(Until.newWindow(), TIMEOUT)
         val detailsActivityText =
             uiDevice.findObject(By.res(packageName, "totalCountTextView"))
-        Assert.assertEquals(detailsActivityText.text, "Number of results: 696")
+        Assert.assertEquals(detailsActivityText.text, "Number of results: 2997")
     }
 
     @Test
