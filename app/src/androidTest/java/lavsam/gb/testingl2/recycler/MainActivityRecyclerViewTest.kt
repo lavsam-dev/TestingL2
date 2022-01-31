@@ -10,6 +10,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.delay
 import lavsam.gb.testingl2.R
 import lavsam.gb.testingl2.view.MainActivity
 import lavsam.gb.testingl2.view.SearchResultAdapter
@@ -46,9 +47,43 @@ class MainActivityRecyclerViewTest {
 
         Espresso.onView(withId(R.id.recyclerView)).perform(
             RecyclerViewActions.actionOnItemAtPosition<SearchResultAdapter.SearchResultViewHolder>(
-                30, ViewActions.click()
+                20, ViewActions.click()
             )
         )
+    }
+
+    @Test
+    fun activitySearch_PerformClickOnItem() {
+        loadList()
+
+        Espresso.onView(withId(R.id.recyclerView))
+            .perform(
+                RecyclerViewActions.scrollTo<SearchResultAdapter.SearchResultViewHolder>(
+                    ViewMatchers.hasDescendant(ViewMatchers.withText("bmTas/JRecord"))
+                )
+            )
+
+        Espresso.onView(withId(R.id.recyclerView))
+            .perform(
+                RecyclerViewActions.actionOnItem<SearchResultAdapter.SearchResultViewHolder>(
+                    ViewMatchers.hasDescendant(ViewMatchers.withText("ajlopez/CobolScript")),
+                    ViewActions.click()
+                )
+            )
+    }
+
+    @Test
+    fun activitySearch_PerformCustomClick() {
+        loadList()
+
+        Espresso.onView(withId(R.id.recyclerView))
+            .perform(
+                RecyclerViewActions
+                    .actionOnItemAtPosition<SearchResultAdapter.SearchResultViewHolder>(
+                        0,
+                        tapOnItemWithId(R.id.checkbox)
+                    )
+            )
     }
 
     @After
@@ -61,6 +96,7 @@ class MainActivityRecyclerViewTest {
         Espresso.onView(withId(R.id.searchEditText))
             .perform(ViewActions.replaceText("COBOL"), ViewActions.closeSoftKeyboard())
         Espresso.onView(withId(R.id.searchEditText)).perform(ViewActions.pressImeActionButton())
+        Espresso.onView(ViewMatchers.isRoot()).perform(delay())
     }
 
     private fun tapOnItemWithId(id: Int) = object : ViewAction {
@@ -75,6 +111,17 @@ class MainActivityRecyclerViewTest {
         override fun perform(uiController: UiController?, view: View?) {
             val v = view?.findViewById(id) as View
             v.performClick()
+        }
+    }
+
+    private fun delay(): ViewAction? {
+        return object : ViewAction {
+            override fun getConstraints(): Matcher<View> = ViewMatchers.isRoot()
+            override fun getDescription(): String = "wait for $3 seconds"
+
+            override fun perform(uiController: UiController?, view: View?) {
+                uiController?.loopMainThreadForAtLeast(3000)
+            }
         }
     }
 }

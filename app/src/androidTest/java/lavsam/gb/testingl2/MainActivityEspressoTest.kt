@@ -95,7 +95,7 @@ class MainActivityEspressoTest {
     private fun delay(): ViewAction? {
         return object : ViewAction {
             override fun getConstraints(): Matcher<View> = ViewMatchers.isRoot()
-            override fun getDescription(): String = "wait for $3 seconds"
+            override fun getDescription(): String = "wait for $4 seconds"
 
             override fun perform(uiController: UiController?, view: View?) {
                 uiController?.loopMainThreadForAtLeast(3000)
