@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="list_item_padding">16dp</dimen>
+    <dimen name="list_item_padding">3dp</dimen>
     <dimen name="margin">16dp</dimen>
+    <dimen name="checkbox_height">20dp</dimen>
 </resources>
