@@ -109,8 +109,8 @@ class MainActivityRecyclerViewTest {
         }
 
         override fun perform(uiController: UiController?, view: View?) {
-            val v = view?.findViewById(id) as View
-            v.performClick()
+            val keySearch = view?.findViewById(id) as View
+            keySearch.performClick()
         }
     }
 
