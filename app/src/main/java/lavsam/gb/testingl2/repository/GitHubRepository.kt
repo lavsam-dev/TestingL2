@@ -1,5 +1,8 @@
 package lavsam.gb.testingl2.repository
 
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import lavsam.gb.testingl2.model.SearchResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,5 +31,15 @@ internal class GitHubRepository(private val gitHubApi: GitHubApi)  : RepositoryC
                 callback.handleGitHubError()
             }
         })
+    }
+
+    override fun searchGithub(query: String): Observable<SearchResponse> {
+        return gitHubApi.searchGithubRx(query)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override suspend fun searchGithubAsync(query: String): SearchResponse {
+        return gitHubApi.searchGitHubAsync(query).await()
     }
 }

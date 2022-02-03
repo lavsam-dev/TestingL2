@@ -1,33 +1,69 @@
 package lavsam.gb.testingl2.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
+import lavsam.gb.testingl2.AppState
 import lavsam.gb.testingl2.R
 import lavsam.gb.testingl2.model.SearchResult
-import lavsam.gb.testingl2.presenter.PresenterSearchContract
-import lavsam.gb.testingl2.presenter.SearchPresenter
-import lavsam.gb.testingl2.repository.GitHubApi
-import lavsam.gb.testingl2.repository.GitHubRepository
+import lavsam.gb.testingl2.presenter.SearchViewModel
+import lavsam.gb.testingl2.repository.FakeGitHubRepository
+import lavsam.gb.testingl2.repository.RepositoryContract
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
+
 class MainActivity : AppCompatActivity(), ViewSearchContract {
 
     private val adapter = SearchResultAdapter()
-    private val presenter: PresenterSearchContract = SearchPresenter(this, createRepository())
+    private val viewModel: SearchViewModel by lazy {
+        ViewModelProvider(this).get(SearchViewModel::class.java)
+    }
+
     private var totalCount: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        presenter.onAttach(this)
         setUI()
+        viewModel.subscribeToLiveData().observe(this) { renderData(it) }
+    }
+
+    private fun renderData(screenState: AppState) {
+        when (screenState) {
+            is AppState.Working -> {
+                val searchResponse = screenState.searchResponse
+                val totalCount = searchResponse.totalCount
+                progressBar.visibility = View.GONE
+                with(totalCountTextView) {
+                    visibility = View.VISIBLE
+                    text =
+                        String.format(
+                            Locale.getDefault(),
+                            getString(R.string.results_count),
+                            totalCount
+                        )
+                }
+
+                if (totalCount != null) {
+                    this.totalCount = totalCount
+                }
+                searchResponse.searchResults?.let { adapter.updateResults(it) }
+            }
+            is AppState.Loading -> {
+                progressBar.visibility = View.VISIBLE
+            }
+            is AppState.Error -> {
+                progressBar.visibility = View.GONE
+                Toast.makeText(this, screenState.error.message, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun setUI() {
@@ -49,7 +85,7 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val query = searchEditText.text.toString()
                 if (query.isNotBlank()) {
-                    presenter.searchGitHub(query)
+                    viewModel.searchGitHub(query)
                     return@OnEditorActionListener true
                 } else {
                     Toast.makeText(
@@ -68,7 +104,7 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         searchButton.setOnClickListener {
             val query = searchEditText.text.toString()
             if (query.isNotBlank()) {
-                presenter.searchGitHub(query)
+                viewModel.searchGitHub(query)
             } else {
                 Toast.makeText(
                     this@MainActivity,
@@ -79,9 +115,8 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         }
     }
 
-    private fun createRepository(): GitHubRepository {
-        return GitHubRepository(createRetrofit().create(GitHubApi::class.java))
-    }
+    private fun createRepository(): RepositoryContract = FakeGitHubRepository()
+
 
     private fun createRetrofit(): Retrofit {
         return Retrofit.Builder()
@@ -120,10 +155,10 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.onDetach()
     }
 
     companion object {
         const val BASE_URL = "https://api.github.com"
+        const val FAKE = "FAKE"
     }
 }
