@@ -192,3 +192,15 @@
 ![Маршрут к месту ДТП](https://raw.githubusercontent.com/lavsam-dev/TestingL2/master/Screen08-1.png)
 ### Индикация, что помощь в пути
 ![Индикация, что помощь в пути](https://raw.githubusercontent.com/lavsam-dev/TestingL2/master/Screen09-1.png)
+## Дополнительная информация
+Для просмотра и редактирования схемы работы приложения и макета используем  [https://app.diagrams.net](https://app.diagrams.net/), открыть с Github по следующим ссылкам:
+
+[https://github.com/vikzak/motohelp/blob/main/scheme_v1.drawio](https://github.com/vikzak/motohelp/blob/main/scheme_v1.drawio)
+
+[https://github.com/vikzak/motohelp/blob/main/maket.drawio](https://github.com/vikzak/motohelp/blob/main/maket.drawio)
+
+Документация по проекту:  [https://docs.google.com/document/d/1ibJW3-lc5dMOJIEu5XrHqnL5S3fu-afudGxyldtIvbs/](https://docs.google.com/document/d/1ibJW3-lc5dMOJIEu5XrHqnL5S3fu-afudGxyldtIvbs/)
+
+Схема взаимодействия модулей проекта  [https://github.com/vikzak/motohelp/blob/main/scheme_v1.pdf](https://github.com/vikzak/motohelp/blob/main/scheme_v1.pdf)  - v.1
+
+Макет приложения  [https://github.com/vikzak/motohelp/blob/main/maket.pdf](https://github.com/vikzak/motohelp/blob/main/maket.pdf)  - v.1
