@@ -170,7 +170,25 @@
 для погоды - OpenWeather  [https://openweathermap.org/](https://openweathermap.org/) (есть бесплатное API)
 
 ## Скриншоты приложения.
+### Вход в приложение
 
-![Вход в приложение](https://raw.githubusercontent.com/lavsam-dev/TestingL2/master/Screen00-1.png)  
+![Вход в приложение](https://raw.githubusercontent.com/lavsam-dev/TestingL2/master/Screen00-1.png)
+### Основной экран  
 ![Основной экран](https://raw.githubusercontent.com/lavsam-dev/TestingL2/master/Screen01-1.png)
+### Установка маркера
 ![Установка маркера](https://raw.githubusercontent.com/lavsam-dev/TestingL2/master/Screen02-1.png)
+### Маркер ДТП установлен
+![Маркер ДТП установлен](https://raw.githubusercontent.com/lavsam-dev/TestingL2/master/Screen03-1.png)
+### Маркер ДТП в списке маркеров
+![Маркер ДТП в списке маркеров](https://raw.githubusercontent.com/lavsam-dev/TestingL2/master/Screen04-1.png)
+### Маркер ДТП на карте
+![Маркер ДТП на карте](https://raw.githubusercontent.com/lavsam-dev/TestingL2/master/Screen05-1.png)
+### Уточнение информации о ДТП
+![Уточнение информации о ДТП](https://raw.githubusercontent.com/lavsam-dev/TestingL2/master/Screen06-1.png)
+### Уточненный маркер ДТП в списке
+![Уточненный маркер ДТП в списке](https://raw.githubusercontent.com/lavsam-dev/TestingL2/master/Screen07-1.png)
+![Уточненный маркер ДТП в списке](https://raw.githubusercontent.com/lavsam-dev/TestingL2/master/Screen07-1.png)
+### Маршрут к месту ДТП
+![Маршрут к месту ДТП](https://raw.githubusercontent.com/lavsam-dev/TestingL2/master/Screen08-1.png)
+### Индикация, что помощь в пути
+![Индикация, что помощь в пути](https://raw.githubusercontent.com/lavsam-dev/TestingL2/master/Screen09-1.png)
